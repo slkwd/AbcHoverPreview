@@ -47,9 +47,7 @@ The global variable $wgAbcJsBasicPath specifies the URL path to abcjs-basic.js. 
 
 AbcHoverPreview adds a user preference labeled “Show preview on mouse hover” in the Appearance (Rendering) section of Special:Preferences. This option allows users to enable or disable the mouse hover preview feature. The default setting is enabled.
 
-This preference is registered using the MediaWiki hook GetPreferences in the file includes/AbcHoverPreviewPreferences.php. The default value is set in LocalSettings.php:
-
-$wgDefaultUserOptions['abcHoverPreviewMouseHover'] = 1;
+This preference is registered using the MediaWiki hook GetPreferences in the file includes/AbcHoverPreviewPreferences.php.
 
 ## Tooltip Behavior
 * Tooltip Delay:
