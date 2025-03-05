@@ -69,10 +69,10 @@ Place the entire AbcHoverPreview folder into your MediaWiki extensions directory
 3.	**Load the Extension:**
 Add the following lines to your LocalSettings.php file:
 
-   ```bash
-	wfLoadExtension( 'AbcHoverPreview' );
-	// Configure the path to abcjs-basic.js
-	$wgAbcJsBasicPath = "/your/path/to/abcjs-basic.js";
+````
+wfLoadExtension( 'AbcHoverPreview' );
+// Configure the path to abcjs-basic.js
+$wgAbcJsBasicPath = "/w/JavaScript/abcjs-basic.js";
 
 
 ##Configuration
