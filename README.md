@@ -25,14 +25,6 @@ AbcHoverPreview is a MediaWiki extension that displays a preview tooltip for pag
 
    ```bash
    git clone https://github.com/yourusername/AbcHoverPreview.git
-   
-
-
-
-Below is the complete README.md file that includes all the necessary information in one file.
-
-⸻
-
 
 
 # AbcHoverPreview
