@@ -13,7 +13,7 @@ AbcHoverPreview is a MediaWiki extension that displays a preview tooltip for pag
 
 ## Prerequisites
 
-- **MediaWiki:** Version 1.25 or higher (tested on recent versions).
+- **MediaWiki:** Version 1.25 or higher (tested on 1.43).
 - **ABCJS-Basic Library:** The extension relies on the [ABCJS-Basic](https://github.com/paulrosen/abcjs) library to render ABC notation. Place the `abcjs-basic.js` file (for example in `/w/JavaScript/`) on your server.
 - **PHP:** A working PHP installation (as required by MediaWiki).
 
