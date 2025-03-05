@@ -26,35 +26,6 @@ AbcHoverPreview is a MediaWiki extension that displays a preview tooltip for pag
    ```bash
    git clone https://github.com/yourusername/AbcHoverPreview.git
 
-
-# AbcHoverPreview
-
-AbcHoverPreview is a MediaWiki extension that displays a preview tooltip for pages containing ABC music notation when the user hovers over a wiki link. The tooltip shows an excerpt ("Incipit")—specifically, the first musical line extracted from the ABC block—allowing users to preview musical notation without leaving the current page.
-
-## Features
-
-- **Mouse Hover Preview:** Displays a tooltip when hovering over a link to a page that contains ABC notation.
-- **Incipit Label:** The tooltip includes a header with the label **"Incipit"** to indicate that only the first musical line is shown.
-- **Delayed Tooltip:** A small delay (default 300 ms) is applied before the tooltip appears, so that multiple tooltips do not overwhelm the interface.
-- **Active Tooltip Control:** While a tooltip is visible, no new tooltip will open.
-- **User Preference:** Users can enable or disable the mouse hover preview via their MediaWiki preferences.
-- **Configurable abcjs-basic.js Path:** You can specify the path to the ABCJS-Basic library via a configuration parameter in LocalSettings.php.
-
-## Prerequisites
-
-- **MediaWiki:** Version 1.25 or higher (tested on recent versions).
-- **ABCJS-Basic Library:** The extension relies on the [ABCJS-Basic](https://github.com/paulrosen/abcjs) library to render ABC notation. Place the `abcjs-basic.js` file (for example in `/w/JavaScript/`) on your server.
-- **PHP:** A working PHP installation (as required by MediaWiki).
-
-## Installation
-
-1. **Download or Clone the Extension:**
-
-   Clone the repository or download the archive from GitHub:
-
-   ```bash
-   git clone https://github.com/yourusername/AbcHoverPreview.git
-
 2.	**Copy the Extension Folder:**
 Place the entire AbcHoverPreview folder into your MediaWiki extensions directory (commonly /var/www/w/extensions/).
 
