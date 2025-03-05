@@ -73,7 +73,7 @@ Add the following lines to your LocalSettings.php file:
 	wfLoadExtension( 'AbcHoverPreview' );
 	// Configure the path to abcjs-basic.js
 	$wgAbcJsBasicPath = "/your/path/to/abcjs-basic.js";
-	````
+
 
 ##Configuration
 
