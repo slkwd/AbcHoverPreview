@@ -68,21 +68,19 @@ Place the entire AbcHoverPreview folder into your MediaWiki extensions directory
 
 3.	**Load the Extension:**
 Add the following lines to your LocalSettings.php file:
+	```php
+	wfLoadExtension( 'AbcHoverPreview' );
+	// Configure the path to abcjs-basic.js
+	$wgAbcJsBasicPath = "/w/JavaScript/abcjs-basic.js";
 
-````
-wfLoadExtension( 'AbcHoverPreview' );
-// Configure the path to abcjs-basic.js
-$wgAbcJsBasicPath = "/w/JavaScript/abcjs-basic.js";
-
-
-##Configuration
+## Configuration
 
 Global Configuration
 
 * abcjs-basic.js Path:
 The global variable $wgAbcJsBasicPath specifies the URL path to abcjs-basic.js. Ensure that the path is correct for your installation.
 
-##User Preference
+## User Preference
 
 AbcHoverPreview adds a user preference labeled “Show preview on mouse hover” in the Appearance (Rendering) section of Special:Preferences. This option allows users to enable or disable the mouse hover preview feature. The default setting is enabled.
 
@@ -90,14 +88,14 @@ This preference is registered using the MediaWiki hook GetPreferences in the fil
 
 $wgDefaultUserOptions['abcHoverPreviewMouseHover'] = 1;
 
-##Tooltip Behavior
+## Tooltip Behavior
 * Tooltip Delay:
 The delay before the tooltip appears is defined in the JavaScript file (tooltipDelay variable, default is 300 ms). You can adjust this value as needed.
 
 * Active Tooltip Control:
 The extension prevents new tooltips from opening while one is already active.
 
-##How It Works
+## How It Works
 	1.	When a user hovers over a wiki link, the extension waits for a short delay.
 	2.	It checks if the user preference to enable mouse hover preview is set (using mw.user.options.get('abcHoverPreviewMouseHover')).
 	3.	It then retrieves the wikitext of the target page via the MediaWiki API.
@@ -107,14 +105,14 @@ The extension prevents new tooltips from opening while one is already active.
 	7.	The tooltip is positioned near the mouse cursor, ensuring it does not overflow the viewport.
 	8.	While a tooltip is active, new tooltips are not opened until the current one is closed.
 
-##Usage
+## Usage
 * Viewing Previews:
 Hover over any wiki link. If the target page contains ABC notation, a tooltip will appear after a short delay, showing the “Incipit” (the first musical line) of the notation.
 
 * Disabling the Preview:
 Users can disable the preview functionality via Special:Preferences under the Appearance (Rendering) tab.
 
-Customization
+## Customization
 
 * Localization:
 All labels and messages are defined in the i18n/en.json file. You can add translations by creating additional JSON files for other languages.
@@ -122,14 +120,14 @@ All labels and messages are defined in the i18n/en.json file. You can add transl
 * CSS & JavaScript:
 The tooltip appearance and behavior can be customized by modifying the styles in the JavaScript file (resources/abcHoverPreview.js) or by adding your own CSS rules in MediaWiki:Common.css.
 
-##Troubleshooting
+## Troubleshooting
 * Preference Not Taking Effect:
 Ensure you have cleared your cache and, if needed, logged out and back in after installing the extension. Verify the preference appears in Special:Preferences under the Rendering section.
 
 * abcjs-basic.js Issues:
 Double-check the $wgAbcJsBasicPath setting in LocalSettings.php and ensure the file is accessible via the specified URL.
 
-##Contributing
+## Contributing
 
 Contributions and feedback are welcome! If you have any issues or suggestions for improvement, please open an issue or submit a pull request on the GitHub repository.
 
