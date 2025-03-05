@@ -94,7 +94,7 @@ Contributions and feedback are welcome! If you have any issues or suggestions fo
 
 License
 
-AbcHoverPreview is licensed under the GPL-2.0-or-later license.
+AbcHoverPreview is licensed under the GPL-3.0-or-later license.
 
 ⸻
 
