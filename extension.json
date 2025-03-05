@@ -1,0 +1,31 @@
+{
+    "name": "AbcHoverPreview",
+    "version": "0.3.0",
+    "author": "Valerio Pelliccioni",
+	"url": "https://www.mediawiki.org/wiki/Extension:AbcHoverPreview",
+    "description": "An extension to display a preview tooltip for ABC notation on mouse hover over wiki links pointing to a page containing ABC music notation .",
+    "license-name": "GPL-2.0-or-later",
+    "manifest_version": 2,
+    "AutoloadClasses": {
+        "AbcHoverPreviewHooks": "includes/AbcHoverPreviewHooks.php",
+        "AbcHoverPreviewPreferences": "includes/AbcHoverPreviewPreferences.php"
+    },
+    "Hooks": {
+        "BeforePageDisplay": "AbcHoverPreviewHooks::onBeforePageDisplay",
+        "GetPreferences": "AbcHoverPreviewPreferences::onGetPreferences"
+    },
+    "ResourceModules": {
+        "ext.abcHoverPreview": {
+            "scripts": [
+                "resources/abcHoverPreview.js"
+            ],
+            "localBasePath": "",
+            "remoteExtPath": "AbcHoverPreview"
+        }
+    },
+    "MessagesDirs": {
+        "AbcHoverPreview": [
+            "i18n"
+        ]
+    }
+}
