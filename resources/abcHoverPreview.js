@@ -5,6 +5,47 @@
     var tooltipDelay = 300; // Delay in milliseconds before showing the tooltip
 
     /**
+     * Inject a <style> tag with arrow rules for top/bottom alignment.
+     *
+     * - .abc-tooltip-below: The tooltip is below the link, arrow at top.
+     * - .abc-tooltip-above: The tooltip is above the link, arrow at bottom.
+     *
+     * NOTE: The background color is #f5e6d3, so the arrow color must match.
+     * Adjust as needed.
+     */
+    function injectArrowCSS() {
+        var css = `
+            /* Tooltip below the link => arrow on top edge, pointing up */
+            .abc-tooltip-below::before {
+                content: "";
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: -8px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-bottom: 8px solid #fbfce9; /* match tooltip background */
+            }
+
+            /* Tooltip above the link => arrow on bottom edge, pointing down */
+            .abc-tooltip-above::before {
+                content: "";
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: -8px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #fbfce9;
+            }
+        `;
+        $('<style>')
+            .prop('type', 'text/css')
+            .html(css)
+            .appendTo('head');
+    }
+
+    /**
      * Parses the wikitext content and extracts a valid ABC block.
      * The block must start with "X:" and include the "K:" field followed by at least one musical line.
      *
@@ -97,7 +138,10 @@
     }
 
     /**
-     * Positions the tooltip so that it does not overflow outside the viewport.
+     * Positions the tooltip above or below the link, depending on space.
+     * - We center horizontally on pageX.
+     * - By default, we place it below (abc-tooltip-below).
+     * - If it doesn't fit, we place it above (abc-tooltip-above).
      *
      * @param {jQuery} $tooltip - The tooltip element.
      * @param {number} pageX - The mouse page X coordinate.
@@ -112,25 +156,48 @@
         var tooltipWidth = $tooltip.outerWidth();
         var tooltipHeight = $tooltip.outerHeight();
 
-        var left = pageX + 10;
+        // Center the tooltip horizontally around pageX
+        var left = pageX - tooltipWidth / 2;
+        // Place below by default
         var top = pageY + 10;
 
         var rightLimit = scrollLeft + windowWidth;
         var bottomLimit = scrollTop + windowHeight;
 
+        // If the tooltip would overflow to the right, clamp it
         if (left + tooltipWidth > rightLimit) {
-            left = pageX - tooltipWidth - 10;
+            left = rightLimit - tooltipWidth - 1;
         }
+        // If the tooltip would overflow to the left, clamp it
+        if (left < scrollLeft) {
+            left = scrollLeft + 1;
+        }
+
+        // We'll assume below first
+        var below = true;
+        // If placing it below overflows the bottom, place it above
         if (top + tooltipHeight > bottomLimit) {
+            below = false;
             top = pageY - tooltipHeight - 10;
         }
-        if (left < scrollLeft) {
-            left = scrollLeft;
-        }
+
+        // If placing above goes off the top, clamp it
         if (top < scrollTop) {
-            top = scrollTop;
+            top = scrollTop + 1;
         }
+
         $tooltip.css({ left: left, top: top }).show();
+
+        // Add the correct class for the arrow
+        if (below) {
+            $tooltip.removeClass('abc-tooltip-above').addClass('abc-tooltip-below');
+            // The tooltip grows downward from the link
+            $tooltip.css({ 'transform-origin': 'top center' });
+        } else {
+            $tooltip.removeClass('abc-tooltip-below').addClass('abc-tooltip-above');
+            // The tooltip grows upward from the link
+            $tooltip.css({ 'transform-origin': 'bottom center' });
+        }
     }
 
     /**
@@ -148,10 +215,17 @@
         var cleanedBlock = cleanABCBlock(abcBlock);
         var $tooltip = $('<div class="abc-tooltip"></div>').hide().css({
             'position': 'absolute',
-            'background': '#fff',
+            // Slightly lighter antique paper color:
+            'background': '#fbfce9',
             'border': '1px solid #ccc',
+            'border-radius': '4px',
+            'box-shadow': '0 2px 5px rgba(0, 0, 0, 0.2)',
+            'font-size': '0.9em',
             'padding': '5px',
-            'z-index': 1000
+            'z-index': 1000,
+            // Scale to 50% (the user requested scale(0.5))
+            'transform': 'scale(0.5)',
+            // We'll set transform-origin dynamically in positionTooltip
         });
         $('body').append($tooltip);
 
@@ -172,6 +246,7 @@
             $tooltip.text('abcjs is not available.');
         }
 
+        // Position the tooltip (above or below)
         positionTooltip($tooltip, pageX, pageY);
 
         // Remove the tooltip when the mouse leaves it
@@ -239,8 +314,14 @@
         }
     }
 
+    // ---------------------------------------------------------------------
+    // Document ready: inject arrow CSS, check user preference, attach events.
+    // ---------------------------------------------------------------------
     $(document).ready(function () {
-        // Attach hover handlers only if the user preference is enabled.
+        // 1) Insert the arrow CSS so we can use pseudo-elements for the arrow
+        injectArrowCSS();
+
+        // 2) Attach hover handlers only if the user preference is enabled
         if (mw.user.options.get('abcHoverPreviewMouseHover') === '1') {
             var $wikiLinks = $('a').filter(function () {
                 var href = $(this).attr('href');
