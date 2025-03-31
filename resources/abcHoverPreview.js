@@ -52,41 +52,48 @@
      * @param {string} content - The raw wikitext content.
      * @return {string|null} - The extracted ABC block or null if not found.
      */
-    function parseABCBlock(content) {
-        if (!content) return null;
-        var lines = content.split(/\r?\n/);
-        var startIndex = -1;
-        for (var i = 0; i < lines.length; i++) {
-            if (/^X:\s*/.test(lines[i])) {
-                startIndex = i;
-                break;
-            }
-        }
-        if (startIndex === -1) return null;
-
-        var kIndex = -1;
-        for (var j = startIndex; j < lines.length; j++) {
-            if (/^K:\s*/.test(lines[j])) {
-                kIndex = j;
-                break;
-            }
-        }
-        if (kIndex === -1) return null;
-
-        var musicLineIndex = -1;
-        for (var k = kIndex + 1; k < lines.length; k++) {
-            var line = lines[k].trim();
-            if (line === "") continue;
-            if (/^[A-Z]:/.test(line)) continue; // Ignore other header fields
-            musicLineIndex = k;
-            break;
-        }
-        if (musicLineIndex === -1) return null;
-
-        // Capture from the "X:" field up to and including the first musical line.
-        var blockLines = lines.slice(startIndex, musicLineIndex + 1);
-        return blockLines.join("\n");
-    }
+	function parseABCBlock(content) {
+	    if (!content) return null;
+	    var lines = content.split(/\r?\n/);
+	    var startIndex = -1;
+	    // Find the "X:" field, ignoring empty or comment lines
+	    for (var i = 0; i < lines.length; i++) {
+	        var line = lines[i].trim();
+	        if (line === "" || /^%/.test(line)) continue;
+	        if (/^X:\s*/.test(line)) {
+	            startIndex = i;
+	            break;
+	        }
+	    }
+	    if (startIndex === -1) return null;
+    
+	    var kIndex = -1;
+	    // Find the "K:" field, ignoring empty or comment lines
+	    for (var j = startIndex; j < lines.length; j++) {
+	        var line = lines[j].trim();
+	        if (line === "" || /^%/.test(line)) continue;
+	        if (/^K:\s*/.test(line)) {
+	            kIndex = j;
+	            break;
+	        }
+	    }
+	    if (kIndex === -1) return null;
+    
+	    var musicLineIndex = -1;
+	    // Find the first musical line after the K: field, skipping empty, comment or header lines
+	    for (var k = kIndex + 1; k < lines.length; k++) {
+	        var line = lines[k].trim();
+	        if (line === "" || /^%/.test(line)) continue;
+	        if (/^[A-Z]:/.test(line)) continue; // ignore other header fields
+	        musicLineIndex = k;
+	        break;
+	    }
+	    if (musicLineIndex === -1) return null;
+    
+	    // Capture from the "X:" field up to and including the first musical line.
+	    var blockLines = lines.slice(startIndex, musicLineIndex + 1);
+	    return blockLines.join("\n");
+	}
 
     /**
      * Removes unwanted fields (B:, D:, F:, H:, N:, S:) from the ABC block.
