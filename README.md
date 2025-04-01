@@ -36,8 +36,9 @@ Add the following lines to your LocalSettings.php file:
 	// Configure the path to abcjs-basic.js
 	$wgAbcJsBasicPath = "/w/JavaScript/abcjs-basic.js";
 	
-4.	**Copy the Extension Folder:**
-Create the MediaWiki message for prefs-abchover in https://YOUR.DOMAIN/wiki/MediaWiki:prefs-abchover with the following content: *Abc mouse over* or something else of you choice. This label will appear in the Advanced options section of your Preference/Appareance Special Page.
+4.	**Create a new MediaWiki message:**
+Create https://YOUR.DOMAIN/wiki/**MediaWiki:prefs-abchover** with the following content: *Abc mouse over* or something else of you choice. 
+This label will appear in the Advanced options section of your Preference/Appareance Special Page.
 
 ## Configuration
 
