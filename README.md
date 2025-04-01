@@ -37,7 +37,7 @@ Add the following lines to your LocalSettings.php file:
 	$wgAbcJsBasicPath = "/w/JavaScript/abcjs-basic.js";
 	
 4.	**Create a new MediaWiki message:**
-Create https://YOUR.DOMAIN/wiki/**MediaWiki:prefs-abchover** with the following content: *Abc mouse over* or something else of you choice. 
+Create https://YOUR.DOMAIN/wiki/MediaWiki:prefs-abchover with the following content: *Abc mouse over* or something else of you choice. 
 This label will appear in the Advanced options section of your Preference/Appareance Special Page.
 
 ## Configuration
