@@ -328,13 +328,13 @@
         // 1) Insert the arrow CSS so we can use pseudo-elements for the arrow
         injectArrowCSS();
 
-        // 2) Attach hover handlers only if the user preference is enabled
-        if (mw.user.options.get('abcHoverPreviewMouseHover') === '1') {
-            var $wikiLinks = $('a').filter(function () {
-                var href = $(this).attr('href');
-                return href && href.indexOf('/wiki/') === 0;
-            });
-            $wikiLinks.hover(onLinkHoverIn, onLinkHoverOut);
-        }
-    });
+    // 2) Attach hover handlers if the user is anonymous or the user preference is enabled
+    if (mw.user.isAnon() || mw.user.options.get('abcHoverPreviewMouseHover') === '1') {
+        var $wikiLinks = $('a').filter(function () {
+            var href = $(this).attr('href');
+            return href && href.indexOf('/wiki/') === 0;
+        });
+        $wikiLinks.hover(onLinkHoverIn, onLinkHoverOut);
+    }
+  });
 }(mediaWiki, jQuery));
