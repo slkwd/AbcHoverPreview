@@ -19,7 +19,7 @@ class AbcHoverPreviewPreferences {
         $preferences['abcHoverPreviewMouseHover'] = [
             'type'          => 'toggle',
             'label-message' => 'pref-abc-hover-preview-mousehover',
-            'section'       => 'rendering'
+            'section'       => 'rendering/abchover'
         ];
         return true;
     }
